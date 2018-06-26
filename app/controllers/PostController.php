@@ -13,12 +13,13 @@ class PostController extends \Phalcon\Mvc\Controller
         foreach ($posts as $post) {
             if ($post->from) {
                 if ($post->anonymous != 1) {
-                    $post->from = Users::findFirstById($post->from)->name;
+                    $user = Users::findFirstById($post->from);
+                    $post->from = array('name' => $user->name, 'url'=>$user->user);
                 } else {
-                    $post->from = "Anonimo";
+                    $post->from = array('name' => 'Anonimo');
                 }
             } else {
-                $post->from = "Anonimo";
+                $post->from = array('name' => 'Anonimo');
             }
             $newPosts[] = $post;
         }

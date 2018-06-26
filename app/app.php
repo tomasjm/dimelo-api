@@ -32,6 +32,14 @@ $app->post('/auth/check', function() use($app) {
     echo json_encode ( (new AuthController)->checksession($app));
 });
 
+$app->post('/profile/update', function() use($app) {
+    echo json_encode ( (new ProfileController)->updateUser($app));
+});
+$app->post('/profile/updatephoto', function() use($app) {
+    echo json_encode ( (new ProfileController)->updateUserPhoto($app));
+});
+
+
 $app->post('/post/create', function() use($app) {
     echo json_encode ( (new PostController)->createPost($app));
 });
@@ -45,11 +53,9 @@ $app->get('/post/{user_id}', function($user_id) {
 $app->get('/profile/{user}', function($user) {
     echo json_encode( (new ProfileController)->getUserInfo($user));
 });
-$app->get('/profile/xd', function() {
-    echo json_encode( (new ProfileController)->getUserInfo2());
-});
-$app->get('/time', function() {
-    echo time();
+
+$app->get('/profile/image/{user_id}', function($user_id) {
+    echo json_encode( (new ProfileController)->getUserImage($user_id));
 });
 
 

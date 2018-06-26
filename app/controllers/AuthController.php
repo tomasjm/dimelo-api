@@ -56,11 +56,10 @@ class AuthController extends \Phalcon\Mvc\Controller
         $regUsuario->password = md5($datos->password);
         $regUsuario->user = $datos->user;
         $regUsuario->role = "USER_ROLE";
-        $regUsuario->description = null;
-        $regUsuario->photo = null;
+        $regUsuario->desc = 'Hola! Soy nuevo en Dimelo.pw!';
+        $regUsuario->photo = 'avatar.png';
         $regUsuario->create();
         return array('response' => true, 'user' => $regUsuario);
-
     }
 
 }
