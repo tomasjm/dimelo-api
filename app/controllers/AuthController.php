@@ -22,10 +22,10 @@ class AuthController extends \Phalcon\Mvc\Controller
             if ($usuario->password == md5($datos->password)) {
                 return array('response'=> true, 'user' => $usuario);
             } else {
-                return array('response' => false, 'msg' => "Datos ingresados incorrectos");
+                return array('response' => false, 'message' => "Datos ingresados incorrectos");
             }
         } else {
-            return array('response' => false, 'msg' => "No existe este correo en nuestra base de datos");
+            return array('response' => false, 'message' => "Datos ingresados incorrectos");
         }
 
     }
@@ -44,11 +44,11 @@ class AuthController extends \Phalcon\Mvc\Controller
         $datos = json_decode($app->request->getRawBody());
         $email = Users::findFirstByEmail($datos->email);
         if ($email) {
-            return array('response' => false, 'msg' => 'Este correo ya se encuentra registrado!');
+            return array('response' => false, 'message' => 'Este correo ya se encuentra registrado!');
         }
         $user = Users::findFirstByUser($datos->user);
         if ($user) {
-            return array('response' => false, 'msg' => 'Este usuario ya se encuentra registrado!');
+            return array('response' => false, 'message' => 'Este usuario ya se encuentra registrado!');
         }
         $regUsuario = new Users();
         $regUsuario->name = $datos->name;

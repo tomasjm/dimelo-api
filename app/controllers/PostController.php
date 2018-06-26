@@ -14,7 +14,7 @@ class PostController extends \Phalcon\Mvc\Controller
             if ($post->from) {
                 if ($post->anonymous != 1) {
                     $user = Users::findFirstById($post->from);
-                    $post->from = array('name' => $user->name, 'url'=>$user->user);
+                    $post->from = array('name' => $user->name, 'url'=>$user->user, 'photo'=>$user->photo);
                 } else {
                     $post->from = array('name' => 'Anonimo');
                 }
