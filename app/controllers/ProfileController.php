@@ -33,6 +33,11 @@ class ProfileController extends \Phalcon\Mvc\Controller
             $user->name = $datos->name;
             $user->desc = $datos->desc;
             $user->user = $datos->user;
+            if ($datos->postperm) {
+                $user->postperm = 1;
+            } else {
+                $user->postperm = 0;
+            }
             $user->update();
             return array('response'=>true, 'user' => $user);
         }

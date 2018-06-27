@@ -13,7 +13,7 @@ return new \Phalcon\Config([
         'username'   => 'root',
         'password'   => '',
         'dbname'     => 'dimelodb',
-        'charset'    => 'utf8',
+        'charset'    => 'utf8mb4',
     ],
 
     'application' => [
