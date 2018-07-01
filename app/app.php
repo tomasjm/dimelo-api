@@ -58,6 +58,10 @@ $app->get('/profile/image/{user_id}', function($user_id) {
     echo json_encode( (new ProfileController)->getUserImage($user_id));
 });
 
+$app->get('/stats/admin', function() {
+    echo json_encode( (new StatsController)->getAdmins());
+});
+
 
 
 /**

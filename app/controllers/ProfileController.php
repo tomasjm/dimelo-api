@@ -9,6 +9,7 @@ class ProfileController extends \Phalcon\Mvc\Controller
     }
 
     function getUserInfo($user) {
+        //RUTA CON PARAMETROS
         $usuario = Users::findFirstByUser($user);
 
         if($usuario) {
@@ -21,6 +22,14 @@ class ProfileController extends \Phalcon\Mvc\Controller
     }
 
     public function updateUser($app) {
+        /* JSON POST
+        {
+            "user_id": user_id logueado,
+            "name": nuevo nombre,
+            "desc": nueva descripción,
+            "user": nueva url del perfil,
+        }
+        */
         $datos = json_decode($app->request->getRawBody());
         $URL = Users::findFirstByUser($datos->user);
         if ($URL) {
@@ -45,6 +54,7 @@ class ProfileController extends \Phalcon\Mvc\Controller
     }
 
     public function updateUserPhoto($app) {
+        // formDATA! user_id // photo
         $user = Users::findFirstById($this->request->get('user_id'));
         if ($user) {
             $extension;

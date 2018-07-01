@@ -12,7 +12,6 @@ class AuthController extends \Phalcon\Mvc\Controller
         {
             "email" : email,
             "password": password
-            TODO: generar auth key
         }
         
         */
@@ -20,6 +19,8 @@ class AuthController extends \Phalcon\Mvc\Controller
         $usuario = Users::findFirstByEmail($datos->email);
         if ($usuario) {
             if ($usuario->password == md5($datos->password)) {
+                $usuario->auth_key = md5($usuario->id . time());
+                $usuario->update();
                 return array('response'=> true, 'user' => $usuario);
             } else {
                 return array('response' => false, 'message' => "Datos ingresados incorrectos");
@@ -61,7 +62,30 @@ class AuthController extends \Phalcon\Mvc\Controller
         $regUsuario->postperm = 1;
         $regUsuario->banned = 0;
         $regUsuario->create();
+        $regUsuario->auth_key = md5($regUsuario->id . time());
+        $regUsuario->update();
         return array('response' => true, 'user' => $regUsuario);
+    }
+
+    public function checksession($app) {
+        /* JSON POST
+        {
+            "user_id": user_id logueado,
+            "auth_key": auth_key almacenado,
+        }
+        */
+        $datos = json_decode($app->request->getRawBody());
+        $usuario = Users::findFirstByAuth_key($datos->auth_key);
+        if ($usuario) {
+            if ($usuario->id == $datos->user_id) {
+                return array('response'=> true, 'user' => $usuario);
+            } else {
+                return array('response'=> false, 'message' => 'Debes volver a iniciar sesión');
+            }
+        } else {
+            return array('response'=> false, 'message' => 'Debes volver a iniciar sesión');
+        }
+
     }
 
 }
